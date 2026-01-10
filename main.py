@@ -115,6 +115,46 @@ for i in data["workids"]:
         print("再创作完毕")
     print(f"=====结束作品ID：{i}| 余{25 - count}个=====")
 
-# 结束
+# 询问是否进行删除操作
 
-print("脚本运行完成，请在数据更新后执行 delete.py~")
+if input("现在就删除已创建的作品吗？如果要删除，请输入：Y") == "Y":
+    count = 0
+
+    with open("workid.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    for i in data["workids"]:
+        count = count + 1
+        print(f"=====开始作品ID：{i} | 第{count}个=====")
+        # 解除作品的发布状态
+        if (
+                requests.put(
+                    url=f"https://api.codemao.cn/web/works/r2/unpublish/{i}", headers=headers
+                ).status_code
+                == 200
+        ):
+            print("解除发布状态成功")
+        else:
+            print("解除发布状态失败")
+        time.sleep(1)
+        # 删除作品
+        if (
+                requests.delete(
+                    url=f"https://api-creation.codemao.cn/kitten/common/work/{i}/temporarily",
+                    headers=headers,
+                ).status_code
+                == 200
+        ):
+            print("删除作品成功")
+        else:
+            print("删除作品失败")
+        time.sleep(4)
+        print("等待一会，防止Autoban发力...")
+
+        print(f"=====结束作品ID：{i}| 余{25 - count}个=====")
+
+    os.remove("workid.json")
+
+    print("运行完毕，尽情享用吧~")
+else:
+    print("脚本运行完成，请在数据更新后执行 delete.py~")
