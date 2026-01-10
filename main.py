@@ -117,7 +117,7 @@ for i in data["workids"]:
 
 # 询问是否进行删除操作
 
-if input("现在就删除已创建的作品吗？如果要删除，请输入：Y") == "Y":
+if input("现在就删除已创建的作品吗？如果要删除，请输入字母"Y" :") == "Y":
     count = 0
 
     with open("workid.json", "r", encoding="utf-8") as f:
