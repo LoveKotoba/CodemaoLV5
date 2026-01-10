@@ -91,6 +91,7 @@ for i in range(1, 26):
         # 请求成功
         save_workid(workid)
         time.sleep(5)  # 防止操作过于频繁
+        print("等待一会，防止Autoban发力...")
     else:
         # 请求失败
         exit(f"请求失败：{req.text}")
@@ -116,4 +117,4 @@ for i in data["workids"]:
 
 # 结束
 
-print("脚本运行完成，请在数据更新后执行 delete.py")
+print("脚本运行完成，请在数据更新后执行 delete.py~")
